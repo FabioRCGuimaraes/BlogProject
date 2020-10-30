@@ -14,6 +14,7 @@ const methodOverride = require("method-override");
 // FILES IMPORTS
 const indexRoutes = require("./routes/index");
 const projectRoutes = require("./routes/projects");
+const commentRoutes = require("./routes/comments");
 
 const User = require("./models/user");
 const Project = require("./models/project");
@@ -25,10 +26,12 @@ const app = express();
 
 
 // SETTINGS
-mongoose.connect("mongodb://localhost/projectsBlogDB", { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
+mongoose.connect("mongodb://localhost/projectsBlogDB", { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true}));
+app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
 
 
 // PASSPORT CONFIG
@@ -49,21 +52,15 @@ passport.deserializeUser(User.deserializeUser());
 //================================================
 
 // MIDDLEWARE
-// app.use((req, res, next) => {
-//     res.locals.currentUser = req.user;
-//     next();
-// });
+app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    next();
+});
 
 // ROUTES
 app.use(indexRoutes);
 app.use("/projects", projectRoutes);
-
-
-// Project.create({
-//     name: "Project Test 1",
-//     image: "https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&h=350",
-//     description: "This is a description test."
-// });
+app.use("/projects/:id/comments", commentRoutes);
 
 
 //================================================

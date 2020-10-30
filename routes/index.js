@@ -52,7 +52,6 @@ router.post("/login", passport.authenticate("local", {
 // Handle Logout
 router.get("/logout", (req, res) => {
     req.logOut();
-    console.log("User logged out.");
     res.redirect("/");
 });
 

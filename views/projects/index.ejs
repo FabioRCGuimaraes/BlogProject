@@ -1,7 +1,26 @@
 <%- include("../partials/header") %>
 
-<h1>Welcome to Projects Blog!</h1>
-
-<h2>This is the main page...</h2>
-
+<div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h1>Look our Project Portifolio</h1>
+            <p><a class="btn btn-primary btn-lg" href="/projects/new">Add New Project</a></p>
+        </div>
+    </header>
+    <div class="row" style="display: flex; flex-wrap: wrap;">    
+        <% projects.forEach( project => { %> 
+        <div class="col-md-3 col-sm-6">
+            <div class="img-thumbnail">
+                <img style="width: 100%; height: 250px;" src="<%= project.image %> ">
+                <div class="caption">
+                    <h4><%= project.name %> </h4>
+                </div>
+                <p>
+                    <a href="/projects/<%= project._id %>" class="btn btn-primary">More Info</a>
+                </p>
+            </div>
+        </div>
+        <% }); %> 
+    </div>
+</div>
 <%- include("../partials/footer") %>

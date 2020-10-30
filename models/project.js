@@ -5,8 +5,11 @@ let projectSchema = new mongoose.Schema({
     image: String,
     description: String,
     author: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        },
+        username: String
     },
     comments: [
         {
